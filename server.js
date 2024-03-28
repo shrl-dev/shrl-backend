@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+import ApiKey from "./Database/Model/api.js";
 import morgan from "morgan";
 import { connDB } from "./Database/conn.js"; // Assuming conn.mjs is the connection file
 import urlRoute from "./Routes/urlRouter.js"; // Assuming urlRouter.mjs is the router file
@@ -36,11 +37,6 @@ app.get("/show", (req, res) => {
   res.send(html);
 });
 
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
-
 // Start the server
-const PORT = process.env.PORT || 7000; // Use port from environment variables if available
+const PORT = process.env.PORT || 7000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

@@ -30,6 +30,11 @@ const urlSchema = new mongoose.Schema(
         timestamp: { type: Number },
       },
     ],
+    createdAt: {
+      type: Date,
+      default: Date.now,
+      expires: 604800, // TTL index for 7 days in seconds (7 * 24 * 60 * 60)
+    },
   },
   { timestamps: true },
 );
