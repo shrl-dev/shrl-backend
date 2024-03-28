@@ -1,6 +1,14 @@
 {
-  "version": 2,
-  "name": "shrl-backend",
-  "builds": [{ "src": "server.js", "use": "@vercel/node" }],
-  "routes": [{ "src": "/(.*)", "dest": "/server.js" }]
+  "builds": [
+    {
+      "src": "./server.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "server.js"
+    }
+  ]
 }
