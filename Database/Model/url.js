@@ -15,10 +15,10 @@ const urlSchema = new mongoose.Schema(
     s3Url: {
       type: String,
       required: function () {
-        return this.isFile; // S3 URL is required only if it's a file
+        return this.isFile;
       },
     },
-    // For URL shortening, store redirect location
+
     redirectURL: {
       type: String,
       required: function () {
