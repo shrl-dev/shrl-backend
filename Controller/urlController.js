@@ -1,4 +1,3 @@
-import shortid from "shortid";
 import URL from "../Database/Model/url.js"; // Assuming url.mjs exports the URL model
 import { encryptURL, decryptURL } from "../secure.js";
 import aws from "aws-sdk";
@@ -44,7 +43,7 @@ const handleFileUpload = async (req, res) => {
       });
     }
     const { originalname: fileName, buffer } = req.file;
-    const shortID = shortid.generate();
+    const shortID = nanoid(4);
     const params = {
       Bucket: "newshortner",
       Key: fileName,
