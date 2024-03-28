@@ -21,6 +21,20 @@ app.use("/", urlRoute);
 app.use("/test", (req, res) => {
   res.status(200).json({ message: "The Good" });
 });
+app.get("/show", (req, res) => {
+  const html = `
+    <html>
+      <head>
+        <title>My App</title>
+      </head>
+      <body>
+        <h1>Hello, World!</h1>
+        <p>Welcome to my app.</p>
+      </body>
+    </html>
+  `;
+  res.send(html);
+});
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
