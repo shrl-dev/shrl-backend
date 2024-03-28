@@ -30,7 +30,7 @@ const handleNewurl = async (req, res) => {
     console.log(e);
     res.status(500).json({
       success: false,
-      message: e,
+      message: `${e}`,
     });
   }
 };
