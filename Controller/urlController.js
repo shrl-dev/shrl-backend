@@ -73,6 +73,31 @@ const handleFileUpload = async (req, res) => {
   }
 };
 
+const handleS3Upload = async (req, res) => {
+  try {
+    const { s3url } = req.body;
+    const shortID = nanoid(4);
+
+    const newURL = new URL({
+      shortId: shortID,
+      s3Url: s3url,
+      isFile: true,
+    });
+    await newURL.save();
+
+    res.status(200).json({
+      success: true,
+      message: `${process.env.ROUTE}${shortID}`,
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong while uploading file",
+    });
+  }
+};
+
 const handleGet = async (req, res) => {
   try {
     const shortID = req.params.shortID;
@@ -108,5 +133,24 @@ function addHttp(url) {
   }
   return url;
 }
+const handleValid = async (req, res) => {
+  try {
+    res.status(200).json({
+      success: true,
+      valid: true,
+    });
+  } catch (e) {
+    res.status(500).json({
+      success: false,
+      valid: false,
+    });
+  }
+};
 
-export { handleNewurl, handleGet, handleFileUpload };
+export {
+  handleNewurl,
+  handleGet,
+  handleFileUpload,
+  handleS3Upload,
+  handleValid,
+};

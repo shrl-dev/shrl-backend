@@ -3,6 +3,8 @@ import {
   handleNewurl,
   handleGet,
   handleFileUpload,
+  handleS3Upload,
+  handleValid,
 } from "../Controller/urlController.js";
 import multer from "multer";
 import validateApiKey from "../Middleware/apiKey.js";
@@ -19,6 +21,9 @@ router.post(
   validateApiKey,
   handleFileUpload,
 );
+
+router.post("/ups3", validateApiKey, handleS3Upload);
+router.get("/valid_key", validateApiKey, handleValid);
 router.get("/:shortID", handleGet);
 
 export default router;
