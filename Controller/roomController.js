@@ -4,7 +4,7 @@ import { nanoid } from "nanoid";
 // Controller to handle room creation
 export const createRoom = async (req, res) => {
   try {
-    const roomId = nanoid(4); // Generate a unique room ID
+    const roomId = Math.floor(100000 + Math.random() * 900000);
 
     // Check if the room already exists
     let room = await Room.findOne({ roomId });
