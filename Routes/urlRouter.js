@@ -26,7 +26,7 @@ router.post(
 router.post("/ups3", validateApiKey, handleS3Upload);
 router.get("/valid_key", validateApiKey, handleValid);
 router.get("/:shortID", handleGet);
-router.post("rooms/create", createRoom);
-router.get("rooms/join/:roomId", joinRoom);
+router.post("/create", createRoom);
+router.get("/join/:roomId", joinRoom);
 
 export default router;
