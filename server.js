@@ -1,31 +1,10 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
 import { Server } from "socket.io";
 import http from "http";
-import morgan from "morgan";
-import { nanoid } from "nanoid"; // For generating unique room IDs
-import { connDB } from "./Database/conn.js"; // Assuming conn.js is your connection file
-import urlRoute from "./Routes/urlRouter.js"; // Assuming urlRouter.js is your router file
-import roomRoutes from "./Routes/roomRouter.js"; // Your room routes
+import dotenv from "dotenv";
+import app from "./api.js"; // Import the Express app
 import Room from "./Database/Model/room.js"; // Import your Room model
 
 dotenv.config();
-
-const app = express();
-
-// Middleware setup
-app.use(morgan("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-
-// Connect to database
-connDB();
-
-// Routes
-app.use("/", urlRoute);
-app.use("/rooms", roomRoutes);
 
 // Create the HTTP server using the Express app
 const server = http.createServer(app);
