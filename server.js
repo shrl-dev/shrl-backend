@@ -1,42 +1,66 @@
-import express from "express";
+import { Server } from "socket.io";
+import http from "http";
 import dotenv from "dotenv";
-import cors from "cors";
-import ApiKey from "./Database/Model/api.js";
-import morgan from "morgan";
-import { connDB } from "./Database/conn.js"; // Assuming conn.mjs is the connection file
-import urlRoute from "./Routes/urlRouter.js"; // Assuming urlRouter.mjs is the router file
+import app from "./api.js"; // Import the Express app
+import Room from "./Database/Model/room.js"; // Import your Room model
 
 dotenv.config();
 
-const app = express();
+// Create the HTTP server using the Express app
+const server = http.createServer(app);
 
-app.use(morgan("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
-
-connDB();
-
-app.use("/", urlRoute);
-
-app.use("/test", (req, res) => {
-  res.status(200).json({ message: "The Good" });
+// Attach socket.io to the HTTP server
+const io = new Server(server, {
+  cors: {
+    origin: "*",
+  },
 });
-app.get("/show", (req, res) => {
-  const html = `
-    <html>
-      <head>
-        <title>My App</title>
-      </head>
-      <body>
-        <h1>Hello, World!</h1>
-        <p>Welcome to my app.</p>
-      </body>
-    </html>
-  `;
-  res.send(html);
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  // Handle joining a room
+  socket.on("joinRoom", async (roomId) => {
+    try {
+      socket.join(roomId);
+      console.log(`User joined room: ${roomId}`);
+
+      // Fetch existing messages for the room and send to the client
+      const room = await Room.findOne({ roomId });
+      if (room) {
+        socket.emit("loadMessages", room.messages);
+      }
+    } catch (error) {
+      console.error("Error joining room:", error);
+      socket.emit("error", { message: "Failed to join room" });
+    }
+  });
+
+  // Handle sending a message
+  socket.on("sendMessage", async ({ roomId, sender, text }) => {
+    try {
+      const newMessage = { sender, text, timestamp: new Date() };
+
+      // Save the message to the database
+      const room = await Room.findOneAndUpdate(
+        { roomId },
+        { $push: { messages: newMessage } },
+        { new: true, upsert: true }, // Create a room if it doesn't exist
+      );
+
+      // Emit the message to everyone in the room
+      io.to(roomId).emit("receiveMessage", newMessage);
+    } catch (error) {
+      console.error("Error sending message:", error);
+      socket.emit("error", { message: "Failed to send message" });
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected");
+  });
 });
 
 // Start the server
 const PORT = process.env.PORT || 7000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
