@@ -21,7 +21,7 @@ connDB();
 
 // Routes
 app.use("/", urlRoute);
-app.use("/rooms", roomRoutes);
+app.use("/rooms1", roomRoutes);
 
 // Export the app as a function to use in serverless environments
 export default app;

@@ -8,7 +8,7 @@
   ],
   "routes": [
     {
-      "src": "/rooms/(.*)",
+      "src": "/rooms1/(.*)",
       "dest": "api.js"
     },
     {
