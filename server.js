@@ -1,7 +1,7 @@
 import { Server } from "socket.io";
 import http from "http";
 import dotenv from "dotenv";
-import app from "./api.js"; // Import the Express app
+import app from "./api.js";
 import Room from "./Database/Model/room.js"; // Import your Room model
 
 dotenv.config();

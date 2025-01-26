@@ -26,6 +26,15 @@ router.post(
 router.post("/ups3", validateApiKey, handleS3Upload);
 router.get("/valid_key", validateApiKey, handleValid);
 router.get("/:shortID", handleGet);
+router.get("/s/*", (req, res) => {
+  // Extract the full URL after "/s/"
+  const longurl = req.params[0];
+  req.params.longurl = encodeURIComponent(longurl);
+
+  // Call the existing handleNewurl method
+  handleNewurl(req, res);
+});
+
 router.post("/create", createRoom);
 router.get("/join/:roomId", joinRoom);
 

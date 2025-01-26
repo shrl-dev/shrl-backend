@@ -12,8 +12,12 @@ const s3 = new aws.S3({
 const handleNewurl = async (req, res) => {
   try {
     const shortID = nanoid(4);
-    const { bodyURL } = req.body;
-    const hashURL = encryptURL(addHttp(bodyURL));
+    let bodyURL = req.body.bodyURL;
+
+    if (!bodyURL) {
+      bodyURL = decodeURIComponent(req.params.longurl);
+    }
+    let hashURL = encryptURL(addHttp(bodyURL));
 
     const newURL = new URL({
       shortId: shortID,
