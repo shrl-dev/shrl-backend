@@ -19,16 +19,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 // In api.js
 // In api.js
 const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+  origin: ["https://app.shrl.live"],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: [
@@ -38,6 +29,8 @@ const corsOptions = {
     "Access-Control-Allow-Origin",
     "Access-Control-Allow-Credentials",
   ],
+  preflightContinue: false, // Important: Prevent preflight from continuing to the next handler
+  optionsSuccessStatus: 204, // Some legacy browsers choke on 204
 };
 
 app.use(cors(corsOptions));
