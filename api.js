@@ -14,6 +14,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
+app.options("*", cors());
+
 app.use(
   cors({
     origin: "*",
