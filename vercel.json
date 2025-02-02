@@ -23,14 +23,14 @@
       ]
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/rooms1/(.*)",
-      "dest": "api.js"
+      "source": "/rooms1/(.*)",
+      "destination": "api.js"
     },
     {
-      "src": "/(.*)",
-      "dest": "api.js"
+      "source": "/(.*)",
+      "destination": "api.js"
     }
   ]
 }
