@@ -19,7 +19,6 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 const server = http.createServer(app);
 
-// Configure Socket.IO
 const io = configureSocket(server, firebaseApp);
 
 const PORT = process.env.PORT || 7000;
