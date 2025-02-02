@@ -29,9 +29,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// Add preflight OPTIONS handler
-app.options("*", cors(corsOptions));
-
 // Middleware setup
 app.use(morgan("dev"));
 app.use(express.json());
