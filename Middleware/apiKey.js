@@ -1,4 +1,4 @@
-import ApiKey from "../Database/Model/api.js"; // Import the ApiKey model using ES modules
+import ApiKey from "../Database/Model/api.js";
 
 const validateApiKey = async (req, res, next) => {
   const apiKey = req.headers["x-api-key"]; // Get the API key from the request header
