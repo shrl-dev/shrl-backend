@@ -10,9 +10,9 @@ dotenv.config();
 
 const app = express();
 
-// Middleware setup
 app.use(morgan("dev"));
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
