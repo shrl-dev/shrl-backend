@@ -19,18 +19,12 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS
 // In api.js
 // In api.js
 const corsOptions = {
-  origin: ["https://app.shrl.live"],
-  credentials: true,
+  origin: true, // Allow all origins
+  credentials: false, // Disable credentials since we're allowing all origins
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: [
-    "Content-Type",
-    "Authorization",
-    "x-api-key",
-    "Access-Control-Allow-Origin",
-    "Access-Control-Allow-Credentials",
-  ],
-  preflightContinue: false, // Important: Prevent preflight from continuing to the next handler
-  optionsSuccessStatus: 204, // Some legacy browsers choke on 204
+  allowedHeaders: ["Content-Type", "Authorization", "x-api-key"],
+  preflightContinue: false,
+  optionsSuccessStatus: 204,
 };
 
 app.use(cors(corsOptions));
