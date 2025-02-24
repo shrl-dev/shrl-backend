@@ -9,20 +9,11 @@ import roomRoutes from "./Routes/roomRouter.js";
 dotenv.config();
 
 const app = express();
-
+app.use(cors())
 app.use(morgan("dev"));
 app.use(express.json());
 
 app.use(express.urlencoded({ extended: true }));
-app.options("*", cors());
-
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  }),
-);
 
 // Connect to the database
 connDB();
